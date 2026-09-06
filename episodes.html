@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Episodes | SMP</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #080b10;
+            color: #fff;
+        }
+
+        /* NAVBAR */
+
+        nav {
+            height: 70px;
+            padding: 0 7%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            background: #0d1118;
+            border-bottom: 1px solid #202832;
+
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: 900;
+        }
+
+        .logo span {
+            color: #55ff55;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: #8d99a6;
+            text-decoration: none;
+            font-size: 14px;
+            transition: .2s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #55ff55;
+        }
+
+        /* HERO */
+
+        .hero {
+            padding: 70px 7% 40px;
+            max-width: 1500px;
+            margin: auto;
+        }
+
+        .hero small {
+            color: #55ff55;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .hero h1 {
+            margin-top: 10px;
+            font-size: clamp(40px, 6vw, 70px);
+        }
+
+        .hero p {
+            margin-top: 15px;
+            color: #87929d;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        /* CONTROLS */
+
+        .controls {
+            max-width: 1500px;
+            margin: auto;
+            padding: 0 7% 35px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filters {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .filter {
+            border: 1px solid #28323d;
+            background: #11161e;
+            color: #9da8b3;
+
+            padding: 10px 17px;
+            border-radius: 8px;
+
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .filter:hover,
+        .filter.active {
+            background: #55ff55;
+            color: #061006;
+            border-color: #55ff55;
+            font-weight: bold;
+        }
+
+        .search {
+            width: 260px;
+            padding: 11px 15px;
+
+            background: #11161e;
+            border: 1px solid #28323d;
+            border-radius: 8px;
+
+            color: white;
+            outline: none;
+        }
+
+        .search:focus {
+            border-color: #55ff55;
+        }
+
+        /* EPISODES */
+
+        .episodes {
+            max-width: 1500px;
+            margin: auto;
+            padding: 0 7% 80px;
+        }
+
+        .episode-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fill, minmax(280px, 1fr));
+
+            gap: 22px;
+        }
+
+        .episode-card {
+            background: #10151c;
+            border: 1px solid #202a34;
+            border-radius: 13px;
+            overflow: hidden;
+
+            cursor: pointer;
+
+            transition:
+                transform .2s,
+                border-color .2s,
+                box-shadow .2s;
+        }
+
+        .episode-card:hover {
+            transform: translateY(-5px);
+            border-color: #55ff55;
+
+            box-shadow:
+                0 12px 35px rgba(0,255,80,.08);
+        }
+
+        /* THUMBNAIL */
+
+        .thumbnail {
+            position: relative;
+            aspect-ratio: 16 / 9;
+            background: #171d25;
+            overflow: hidden;
+        }
+
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .ep-number {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+
+            padding: 6px 9px;
+
+            background: rgba(0,0,0,.85);
+            border-radius: 5px;
+
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .play {
+            position: absolute;
+            inset: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(0,0,0,.45);
+
+            opacity: 0;
+            transition: .2s;
+        }
+
+        .episode-card:hover .play {
+            opacity: 1;
+        }
+
+        .play-icon {
+            width: 55px;
+            height: 55px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #55ff55;
+            color: #061006;
+
+            border-radius: 50%;
+
+            font-size: 21px;
+        }
+
+        /* CARD INFO */
+
+        .info {
+            padding: 16px;
+        }
+
+        .creator {
+            color: #55ff55;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .info h2 {
+            margin-top: 7px;
+
+            font-size: 17px;
+            line-height: 1.4;
+        }
+
+        .info p {
+            margin-top: 7px;
+
+            color: #697581;
+            font-size: 12px;
+        }
+
+        /* MODAL */
+
+        .modal {
+            position: fixed;
+            inset: 0;
+
+            background: rgba(0,0,0,.88);
+
+            display: none;
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            z-index: 1000;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            width: min(1000px, 100%);
+
+            background: #0e141b;
+
+            border: 1px solid #2a3540;
+            border-radius: 14px;
+
+            overflow: hidden;
+
+            position: relative;
+        }
+
+        .video {
+            aspect-ratio: 16 / 9;
+            background: black;
+        }
+
+        .video iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .modal-info {
+            padding: 20px;
+        }
+
+        .modal-info h2 {
+            font-size: 21px;
+        }
+
+        .modal-info p {
+            margin-top: 7px;
+            color: #7e8994;
+        }
+
+        .close {
+            position: absolute;
+
+            right: 12px;
+            top: 12px;
+
+            width: 38px;
+            height: 38px;
+
+            border: 0;
+            border-radius: 50%;
+
+            background: rgba(0,0,0,.8);
+            color: white;
+
+            font-size: 22px;
+
+            cursor: pointer;
+
+            z-index: 2;
+        }
+
+        .close:hover {
+            background: #55ff55;
+            color: black;
+        }
+
+        /* EMPTY */
+
+        .empty {
+            display: none;
+
+            text-align: center;
+
+            padding: 70px 20px;
+
+            color: #697581;
+        }
+
+        /* MOBILE */
+
+        @media(max-width: 700px) {
+
+            nav {
+                padding: 0 5%;
+            }
+
+            .nav-links {
+                gap: 12px;
+            }
+
+            .hero,
+            .controls,
+            .episodes {
+                padding-left: 5%;
+                padding-right: 5%;
+            }
+
+            .controls {
+                align-items: stretch;
+            }
+
+            .search {
+                width: 100%;
+            }
+
+            .episode-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav>
+
+    <div class="logo">
+        SMP <span>WORLD</span>
+    </div>
+
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="episodes.html" class="active">Episodes</a>
+    </div>
+
+</nav>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <small>THE SMP ARCHIVE</small>
+
+    <h1>Episodes</h1>
+
+    <p>
+        Watch every episode from the SMP.
+        Explore the stories of Mahakos, Botinis and BlitzNova.
+    </p>
+
+</section>
+
+
+<!-- FILTERS -->
+
+<section class="controls">
+
+    <div class="filters">
+
+        <button class="filter active" data-filter="all">
+            All
+        </button>
+
+        <button class="filter" data-filter="Mahakos">
+            Mahakos
+        </button>
+
+        <button class="filter" data-filter="Botinis">
+            Botinis
+        </button>
+
+        <button class="filter" data-filter="BlitzNova">
+            BlitzNova
+        </button>
+
+    </div>
+
+
+    <input
+        type="text"
+        class="search"
+        id="search"
+        placeholder="Search episodes..."
+    >
+
+</section>
+
+
+<!-- EPISODES -->
+
+<section class="episodes">
+
+    <div
+        class="episode-grid"
+        id="episodeGrid">
+    </div>
+
+    <div
+        class="empty"
+        id="empty">
+        No episodes found.
+    </div>
+
+</section>
+
+
+<!-- VIDEO MODAL -->
+
+<div
+    class="modal"
+    id="modal">
+
+    <div class="modal-content">
+
+        <button
+            class="close"
+            id="close">
+            ×
+        </button>
+
+        <div class="video">
+
+            <iframe
+                id="player"
+                src=""
+                allow="autoplay; encrypted-media; picture-in-picture"
+                allowfullscreen>
+            </iframe>
+
+        </div>
+
+        <div class="modal-info">
+
+            <h2 id="modalTitle"></h2>
+
+            <p id="modalCreator"></p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =====================================
+   EPISODES DATABASE
+===================================== */
+
+const episodes = [
+
+    /* MAHAKOS */
+
+    {
+        creator: "Mahakos",
+        episode: 1,
+        video: "AJDopDDtoVU"
+    },
+
+    {
+        creator: "Mahakos",
+        episode: 2,
+        video: "bqKSr_FaJls"
+    },
+
+    {
+        creator: "Mahakos",
+        episode: 3,
+        video: "8rKwhB5sReA"
+    },
+
+    {
+        creator: "Mahakos",
+        episode: 4,
+        video: "taJAaPbE21w"
+    },
+
+    {
+        creator: "Mahakos",
+        episode: 5,
+        video: "hf4_W-9Gsck"
+    },
+
+    {
+        creator: "Mahakos",
+        episode: 6,
+        video: "rBlcyJSEOzc"
+    },
+
+    {
+        creator: "Mahakos",
+        episode: 7,
+        video: "Ssw_0vLkqCo"
+    },
+
+    {
+        creator: "Mahakos",
+        episode: 8,
+        video: "Q_gYcfie7lU"
+    },
+
+    {
+        creator: "Mahakos",
+        episode: 9,
+        video: "qRcthpjEB1Q"
+    },
+
+
+    /* BOTINIS */
+
+    {
+        creator: "Botinis",
+        episode: 1,
+        video: "NTvKPCdNxs4"
+    },
+
+    {
+        creator: "Botinis",
+        episode: 2,
+        video: "_ywCOjm5NTQ"
+    },
+
+    {
+        creator: "Botinis",
+        episode: 3,
+        video: "lPW58GNi2Fg"
+    },
+
+    {
+        creator: "Botinis",
+        episode: 4,
+        video: "ljOR7QywWSc"
+    },
+
+    {
+        creator: "Botinis",
+        episode: 5,
+        video: "9o4J3eI0QlM"
+    },
+
+
+    /* BLITZNOVA */
+
+    {
+        creator: "BlitzNova",
+        episode: 1,
+        video: "y3VqLTWo2Do"
+    },
+
+    {
+        creator: "BlitzNova",
+        episode: 2,
+        video: "VOkEdWRyeL0"
+    },
+
+    {
+        creator: "BlitzNova",
+        episode: 3,
+        video: "Ph28tqhETiA"
+    },
+
+    {
+        creator: "BlitzNova",
+        episode: 4,
+        video: "79UPbNf-Sog"
+    },
+
+    {
+        creator: "BlitzNova",
+        episode: 5,
+        video: "xLuWhSHLEPU"
+    }
+
+];
+
+
+/* =====================================
+   ELEMENTS
+===================================== */
+
+const grid =
+    document.getElementById("episodeGrid");
+
+const search =
+    document.getElementById("search");
+
+const empty =
+    document.getElementById("empty");
+
+const modal =
+    document.getElementById("modal");
+
+const player =
+    document.getElementById("player");
+
+const modalTitle =
+    document.getElementById("modalTitle");
+
+const modalCreator =
+    document.getElementById("modalCreator");
+
+const close =
+    document.getElementById("close");
+
+
+let currentFilter = "all";
+
+
+/* =====================================
+   RENDER
+===================================== */
+
+function renderEpisodes() {
+
+    const query =
+        search.value.toLowerCase().trim();
+
+
+    const filtered =
+        episodes.filter(ep => {
+
+            const creatorMatch =
+                currentFilter === "all" ||
+                ep.creator === currentFilter;
+
+
+            const searchMatch =
+                ep.creator
+                    .toLowerCase()
+                    .includes(query)
+
+                ||
+
+                `episode ${ep.episode}`
+                    .includes(query);
+
+
+            return creatorMatch && searchMatch;
+
+        });
+
+
+    grid.innerHTML = "";
+
+
+    if (filtered.length === 0) {
+
+        empty.style.display = "block";
+
+        return;
+
+    }
+
+
+    empty.style.display = "none";
+
+
+    filtered.forEach(ep => {
+
+        const card =
+            document.createElement("div");
+
+        card.className =
+            "episode-card";
+
+
+        card.innerHTML = `
+
+            <div class="thumbnail">
+
+                <img
+                    src="https://img.youtube.com/vi/${ep.video}/hqdefault.jpg"
+                    alt="${ep.creator} Episode ${ep.episode}"
+                >
+
+                <div class="ep-number">
+                    EP ${ep.episode}
+                </div>
+
+                <div class="play">
+
+                    <div class="play-icon">
+                        ▶
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="info">
+
+                <div class="creator">
+                    ${ep.creator}
+                </div>
+
+                <h2>
+                    Episode ${ep.episode}
+                </h2>
+
+                <p>
+                    Minecraft SMP
+                </p>
+
+            </div>
+
+        `;
+
+
+        card.addEventListener(
+            "click",
+            () => openEpisode(ep)
+        );
+
+
+        grid.appendChild(card);
+
+    });
+
+}
+
+
+/* =====================================
+   OPEN EPISODE
+===================================== */
+
+function openEpisode(ep) {
+
+    modal.classList.add("show");
+
+
+    player.src =
+        `https://www.youtube.com/embed/${ep.video}?autoplay=1`;
+
+
+    modalTitle.textContent =
+        `${ep.creator} — Episode ${ep.episode}`;
+
+
+    modalCreator.textContent =
+        "Minecraft SMP";
+
+}
+
+
+/* =====================================
+   CLOSE EPISODE
+===================================== */
+
+function closeEpisode() {
+
+    modal.classList.remove("show");
+
+    player.src = "";
+
+}
+
+
+close.addEventListener(
+    "click",
+    closeEpisode
+);
+
+
+modal.addEventListener(
+    "click",
+    function(event) {
+
+        if (event.target === modal) {
+            closeEpisode();
+        }
+
+    }
+);
+
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (event.key === "Escape") {
+            closeEpisode();
+        }
+
+    }
+);
+
+
+/* =====================================
+   FILTERS
+===================================== */
+
+document
+    .querySelectorAll(".filter")
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            function() {
+
+                document
+                    .querySelectorAll(".filter")
+                    .forEach(btn =>
+                        btn.classList.remove("active")
+                    );
+
+
+                this.classList.add("active");
+
+
+                currentFilter =
+                    this.dataset.filter;
+
+
+                renderEpisodes();
+
+            }
+        );
+
+    });
+
+
+/* =====================================
+   SEARCH
+===================================== */
+
+search.addEventListener(
+    "input",
+    renderEpisodes
+);
+
+
+/* =====================================
+   INITIALIZE
+===================================== */
+
+renderEpisodes();
+
+</script>
+
+</body>
+</html>
