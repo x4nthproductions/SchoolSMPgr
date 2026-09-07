@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Episodes | SMP</title>
+    <title>All Episodes | SchoolSMP</title>
 
     <style>
         * {
@@ -14,22 +14,21 @@
         }
 
         body {
+            background: #070707;
+            color: white;
             font-family: Arial, Helvetica, sans-serif;
-            background: #080b10;
-            color: #fff;
         }
 
-        /* NAVBAR */
+        /* ================= NAVBAR ================= */
 
         nav {
-            height: 70px;
-            padding: 0 7%;
+            height: 76px;
+            background: rgba(5, 5, 5, 0.96);
+            border-bottom: 1px solid #241010;
+
             display: flex;
             align-items: center;
-            justify-content: space-between;
-
-            background: #0d1118;
-            border-bottom: 1px solid #202832;
+            padding: 0 4%;
 
             position: sticky;
             top: 0;
@@ -37,157 +36,137 @@
         }
 
         .logo {
-            font-size: 23px;
+            color: #ff1633;
+            font-size: 28px;
             font-weight: 900;
-        }
-
-        .logo span {
-            color: #55ff55;
+            margin-right: 55px;
         }
 
         .nav-links {
             display: flex;
-            gap: 25px;
+            gap: 35px;
         }
 
         .nav-links a {
-            color: #8d99a6;
+            color: #aaa;
             text-decoration: none;
-            font-size: 14px;
-            transition: .2s;
+            font-size: 15px;
+            transition: 0.25s;
         }
 
         .nav-links a:hover,
-        .nav-links a.active {
-            color: #55ff55;
+        .nav-links .active {
+            color: white;
         }
 
-        /* HERO */
-
-        .hero {
-            padding: 70px 7% 40px;
-            max-width: 1500px;
-            margin: auto;
+        .nav-links .active {
+            color: #ff1633;
         }
 
-        .hero small {
-            color: #55ff55;
+        .discord {
+            margin-left: auto;
+
+            border: 1px solid #ff1633;
+            color: #ff1633;
+
+            padding: 11px 20px;
+            border-radius: 7px;
+
+            text-decoration: none;
             font-weight: bold;
-            letter-spacing: 2px;
+
+            transition: 0.25s;
         }
 
-        .hero h1 {
-            margin-top: 10px;
-            font-size: clamp(40px, 6vw, 70px);
+        .discord:hover {
+            background: #ff1633;
+            color: white;
+            box-shadow: 0 0 25px rgba(255, 22, 51, 0.35);
         }
 
-        .hero p {
-            margin-top: 15px;
-            color: #87929d;
-            max-width: 600px;
-            line-height: 1.6;
+        /* ================= HEADER ================= */
+
+        .page-header {
+            padding: 65px 5% 35px;
         }
 
-        /* CONTROLS */
-
-        .controls {
-            max-width: 1500px;
-            margin: auto;
-            padding: 0 7% 35px;
-
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 20px;
-            flex-wrap: wrap;
+        .page-header h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
         }
+
+        .page-header p {
+            color: #888;
+            font-size: 16px;
+        }
+
+        .red-line {
+            width: 65px;
+            height: 3px;
+            background: #ff1633;
+            margin-top: 20px;
+        }
+
+        /* ================= FILTER ================= */
 
         .filters {
+            padding: 0 5% 35px;
+
             display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
+            gap: 12px;
         }
 
         .filter {
-            border: 1px solid #28323d;
-            background: #11161e;
-            color: #9da8b3;
+            background: #111;
+            border: 1px solid #292929;
 
-            padding: 10px 17px;
-            border-radius: 8px;
+            color: #aaa;
+
+            padding: 10px 18px;
+            border-radius: 6px;
 
             cursor: pointer;
-            transition: .2s;
+            transition: 0.2s;
         }
 
         .filter:hover,
         .filter.active {
-            background: #55ff55;
-            color: #061006;
-            border-color: #55ff55;
-            font-weight: bold;
-        }
-
-        .search {
-            width: 260px;
-            padding: 11px 15px;
-
-            background: #11161e;
-            border: 1px solid #28323d;
-            border-radius: 8px;
-
+            border-color: #ff1633;
             color: white;
-            outline: none;
+            background: #16080a;
         }
 
-        .search:focus {
-            border-color: #55ff55;
-        }
-
-        /* EPISODES */
+        /* ================= EPISODES ================= */
 
         .episodes {
-            max-width: 1500px;
-            margin: auto;
-            padding: 0 7% 80px;
-        }
+            padding: 0 5% 70px;
 
-        .episode-grid {
             display: grid;
-            grid-template-columns:
-                repeat(auto-fill, minmax(280px, 1fr));
-
-            gap: 22px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
         }
 
-        .episode-card {
-            background: #10151c;
-            border: 1px solid #202a34;
-            border-radius: 13px;
+        .episode {
+            background: #0d0d0d;
+            border-radius: 8px;
             overflow: hidden;
+
+            border: 1px solid #191919;
 
             cursor: pointer;
 
-            transition:
-                transform .2s,
-                border-color .2s,
-                box-shadow .2s;
+            transition: transform 0.25s, border-color 0.25s;
         }
 
-        .episode-card:hover {
-            transform: translateY(-5px);
-            border-color: #55ff55;
-
-            box-shadow:
-                0 12px 35px rgba(0,255,80,.08);
+        .episode:hover {
+            transform: translateY(-7px);
+            border-color: #ff1633;
         }
-
-        /* THUMBNAIL */
 
         .thumbnail {
             position: relative;
+            width: 100%;
             aspect-ratio: 16 / 9;
-            background: #171d25;
             overflow: hidden;
         }
 
@@ -195,210 +174,113 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+
+            transition: transform 0.4s;
         }
 
-        .ep-number {
+        .episode:hover .thumbnail img {
+            transform: scale(1.06);
+        }
+
+        .duration {
             position: absolute;
-            top: 10px;
-            left: 10px;
+            right: 8px;
+            bottom: 8px;
 
-            padding: 6px 9px;
+            background: rgba(0, 0, 0, 0.85);
 
-            background: rgba(0,0,0,.85);
-            border-radius: 5px;
+            padding: 4px 7px;
+            border-radius: 4px;
 
             font-size: 12px;
+        }
+
+        .episode-info {
+            padding: 14px;
+        }
+
+        .episode-number {
+            color: #ff1633;
+            font-size: 12px;
             font-weight: bold;
+
+            margin-bottom: 5px;
         }
 
-        .play {
-            position: absolute;
-            inset: 0;
+        .episode-title {
+            font-size: 17px;
+            font-weight: bold;
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            background: rgba(0,0,0,.45);
-
-            opacity: 0;
-            transition: .2s;
-        }
-
-        .episode-card:hover .play {
-            opacity: 1;
-        }
-
-        .play-icon {
-            width: 55px;
-            height: 55px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            background: #55ff55;
-            color: #061006;
-
-            border-radius: 50%;
-
-            font-size: 21px;
-        }
-
-        /* CARD INFO */
-
-        .info {
-            padding: 16px;
+            margin-bottom: 8px;
         }
 
         .creator {
-            color: #55ff55;
-            font-size: 11px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            color: #777;
+            font-size: 13px;
         }
 
-        .info h2 {
-            margin-top: 7px;
+        /* ================= FOOTER ================= */
 
-            font-size: 17px;
-            line-height: 1.4;
-        }
-
-        .info p {
-            margin-top: 7px;
-
-            color: #697581;
-            font-size: 12px;
-        }
-
-        /* MODAL */
-
-        .modal {
-            position: fixed;
-            inset: 0;
-
-            background: rgba(0,0,0,.88);
-
-            display: none;
-            align-items: center;
-            justify-content: center;
-
-            padding: 20px;
-
-            z-index: 1000;
-        }
-
-        .modal.show {
-            display: flex;
-        }
-
-        .modal-content {
-            width: min(1000px, 100%);
-
-            background: #0e141b;
-
-            border: 1px solid #2a3540;
-            border-radius: 14px;
-
-            overflow: hidden;
-
-            position: relative;
-        }
-
-        .video {
-            aspect-ratio: 16 / 9;
-            background: black;
-        }
-
-        .video iframe {
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
-
-        .modal-info {
-            padding: 20px;
-        }
-
-        .modal-info h2 {
-            font-size: 21px;
-        }
-
-        .modal-info p {
-            margin-top: 7px;
-            color: #7e8994;
-        }
-
-        .close {
-            position: absolute;
-
-            right: 12px;
-            top: 12px;
-
-            width: 38px;
-            height: 38px;
-
-            border: 0;
-            border-radius: 50%;
-
-            background: rgba(0,0,0,.8);
-            color: white;
-
-            font-size: 22px;
-
-            cursor: pointer;
-
-            z-index: 2;
-        }
-
-        .close:hover {
-            background: #55ff55;
-            color: black;
-        }
-
-        /* EMPTY */
-
-        .empty {
-            display: none;
+        footer {
+            border-top: 1px solid #241010;
 
             text-align: center;
 
-            padding: 70px 20px;
+            padding: 35px 20px;
 
-            color: #697581;
+            color: #777;
         }
 
-        /* MOBILE */
+        footer .copyright {
+            color: white;
+            margin-bottom: 8px;
+        }
 
-        @media(max-width: 700px) {
+        footer .created {
+            font-size: 13px;
+        }
 
-            nav {
-                padding: 0 5%;
+        footer .created span {
+            color: #ff1633;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 1100px) {
+            .episodes {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 750px) {
+            .episodes {
+                grid-template-columns: repeat(2, 1fr);
             }
 
             .nav-links {
-                gap: 12px;
+                gap: 15px;
             }
 
-            .hero,
-            .controls,
+            .logo {
+                margin-right: 20px;
+            }
+
+            .discord {
+                display: none;
+            }
+        }
+
+        @media (max-width: 500px) {
             .episodes {
-                padding-left: 5%;
-                padding-right: 5%;
-            }
-
-            .controls {
-                align-items: stretch;
-            }
-
-            .search {
-                width: 100%;
-            }
-
-            .episode-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .nav-links a:nth-child(3) {
+                display: none;
+            }
+
+            .page-header h1 {
+                font-size: 36px;
             }
         }
     </style>
@@ -406,525 +288,427 @@
 
 <body>
 
-<!-- NAVBAR -->
+    <!-- ================= NAVBAR ================= -->
 
-<nav>
+    <nav>
 
-    <div class="logo">
-        SMP <span>WORLD</span>
-    </div>
+        <div class="logo">
+            SchoolSMP
+        </div>
 
-    <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="episodes.html" class="active">Episodes</a>
-    </div>
+        <div class="nav-links">
 
-</nav>
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="episodes.html" class="active">
+                All Episodes
+            </a>
+
+            <a href="creators.html">
+                Creators
+            </a>
+
+            <a href="#">
+                Search
+            </a>
+
+        </div>
+
+        <a href="#" class="discord">
+            Join our Discord
+        </a>
+
+    </nav>
 
 
-<!-- HERO -->
+    <!-- ================= PAGE HEADER ================= -->
 
-<section class="hero">
+    <section class="page-header">
 
-    <small>THE SMP ARCHIVE</small>
+        <h1>All Episodes</h1>
 
-    <h1>Episodes</h1>
+        <p>
+            Watch every SchoolSMP episode in chronological order.
+        </p>
 
-    <p>
-        Watch every episode from the SMP.
-        Explore the stories of Mahakos, Botinis and BlitzNova.
-    </p>
+        <div class="red-line"></div>
 
-</section>
+    </section>
 
 
-<!-- FILTERS -->
-
-<section class="controls">
+    <!-- ================= FILTERS ================= -->
 
     <div class="filters">
 
-        <button class="filter active" data-filter="all">
+        <button class="filter active" onclick="filterEpisodes('all')">
             All
         </button>
 
-        <button class="filter" data-filter="Mahakos">
-            Mahakos
+        <button class="filter" onclick="filterEpisodes('Thann')">
+            Thann
         </button>
 
-        <button class="filter" data-filter="Botinis">
-            Botinis
+        <button class="filter" onclick="filterEpisodes('Katsaros')">
+            Katsaros
         </button>
 
-        <button class="filter" data-filter="BlitzNova">
-            BlitzNova
+        <button class="filter" onclick="filterEpisodes('Zenix')">
+            Zenix
         </button>
 
     </div>
 
 
-    <input
-        type="text"
-        class="search"
-        id="search"
-        placeholder="Search episodes..."
-    >
+    <!-- ================= EPISODES ================= -->
 
-</section>
+    <section class="episodes" id="episodes">
 
 
-<!-- EPISODES -->
+        <!-- EPISODE 1 -->
 
-<section class="episodes">
-
-    <div
-        class="episode-grid"
-        id="episodeGrid">
-    </div>
-
-    <div
-        class="empty"
-        id="empty">
-        No episodes found.
-    </div>
-
-</section>
-
-
-<!-- VIDEO MODAL -->
-
-<div
-    class="modal"
-    id="modal">
-
-    <div class="modal-content">
-
-        <button
-            class="close"
-            id="close">
-            ×
-        </button>
-
-        <div class="video">
-
-            <iframe
-                id="player"
-                src=""
-                allow="autoplay; encrypted-media; picture-in-picture"
-                allowfullscreen>
-            </iframe>
-
-        </div>
-
-        <div class="modal-info">
-
-            <h2 id="modalTitle"></h2>
-
-            <p id="modalCreator"></p>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-<script>
-
-/* =====================================
-   EPISODES DATABASE
-===================================== */
-
-const episodes = [
-
-    /* MAHAKOS */
-
-    {
-        creator: "Mahakos",
-        episode: 1,
-        video: "AJDopDDtoVU"
-    },
-
-    {
-        creator: "Mahakos",
-        episode: 2,
-        video: "bqKSr_FaJls"
-    },
-
-    {
-        creator: "Mahakos",
-        episode: 3,
-        video: "8rKwhB5sReA"
-    },
-
-    {
-        creator: "Mahakos",
-        episode: 4,
-        video: "taJAaPbE21w"
-    },
-
-    {
-        creator: "Mahakos",
-        episode: 5,
-        video: "hf4_W-9Gsck"
-    },
-
-    {
-        creator: "Mahakos",
-        episode: 6,
-        video: "rBlcyJSEOzc"
-    },
-
-    {
-        creator: "Mahakos",
-        episode: 7,
-        video: "Ssw_0vLkqCo"
-    },
-
-    {
-        creator: "Mahakos",
-        episode: 8,
-        video: "Q_gYcfie7lU"
-    },
-
-    {
-        creator: "Mahakos",
-        episode: 9,
-        video: "qRcthpjEB1Q"
-    },
-
-
-    /* BOTINIS */
-
-    {
-        creator: "Botinis",
-        episode: 1,
-        video: "NTvKPCdNxs4"
-    },
-
-    {
-        creator: "Botinis",
-        episode: 2,
-        video: "_ywCOjm5NTQ"
-    },
-
-    {
-        creator: "Botinis",
-        episode: 3,
-        video: "lPW58GNi2Fg"
-    },
-
-    {
-        creator: "Botinis",
-        episode: 4,
-        video: "ljOR7QywWSc"
-    },
-
-    {
-        creator: "Botinis",
-        episode: 5,
-        video: "9o4J3eI0QlM"
-    },
-
-
-    /* BLITZNOVA */
-
-    {
-        creator: "BlitzNova",
-        episode: 1,
-        video: "y3VqLTWo2Do"
-    },
-
-    {
-        creator: "BlitzNova",
-        episode: 2,
-        video: "VOkEdWRyeL0"
-    },
-
-    {
-        creator: "BlitzNova",
-        episode: 3,
-        video: "Ph28tqhETiA"
-    },
-
-    {
-        creator: "BlitzNova",
-        episode: 4,
-        video: "79UPbNf-Sog"
-    },
-
-    {
-        creator: "BlitzNova",
-        episode: 5,
-        video: "xLuWhSHLEPU"
-    }
-
-];
-
-
-/* =====================================
-   ELEMENTS
-===================================== */
-
-const grid =
-    document.getElementById("episodeGrid");
-
-const search =
-    document.getElementById("search");
-
-const empty =
-    document.getElementById("empty");
-
-const modal =
-    document.getElementById("modal");
-
-const player =
-    document.getElementById("player");
-
-const modalTitle =
-    document.getElementById("modalTitle");
-
-const modalCreator =
-    document.getElementById("modalCreator");
-
-const close =
-    document.getElementById("close");
-
-
-let currentFilter = "all";
-
-
-/* =====================================
-   RENDER
-===================================== */
-
-function renderEpisodes() {
-
-    const query =
-        search.value.toLowerCase().trim();
-
-
-    const filtered =
-        episodes.filter(ep => {
-
-            const creatorMatch =
-                currentFilter === "all" ||
-                ep.creator === currentFilter;
-
-
-            const searchMatch =
-                ep.creator
-                    .toLowerCase()
-                    .includes(query)
-
-                ||
-
-                `episode ${ep.episode}`
-                    .includes(query);
-
-
-            return creatorMatch && searchMatch;
-
-        });
-
-
-    grid.innerHTML = "";
-
-
-    if (filtered.length === 0) {
-
-        empty.style.display = "block";
-
-        return;
-
-    }
-
-
-    empty.style.display = "none";
-
-
-    filtered.forEach(ep => {
-
-        const card =
-            document.createElement("div");
-
-        card.className =
-            "episode-card";
-
-
-        card.innerHTML = `
+        <div class="episode" data-creator="Thann"
+             onclick="openEpisode('YOUTUBE_LINK_1')">
 
             <div class="thumbnail">
 
-                <img
-                    src="https://img.youtube.com/vi/${ep.video}/hqdefault.jpg"
-                    alt="${ep.creator} Episode ${ep.episode}"
-                >
+                <img src="THUMBNAIL_1.jpg">
 
-                <div class="ep-number">
-                    EP ${ep.episode}
-                </div>
-
-                <div class="play">
-
-                    <div class="play-icon">
-                        ▶
-                    </div>
-
-                </div>
+                <span class="duration">
+                    20:31
+                </span>
 
             </div>
 
+            <div class="episode-info">
 
-            <div class="info">
+                <div class="episode-number">
+                    EPISODE 01
+                </div>
+
+                <div class="episode-title">
+                    Η Αρχή
+                </div>
 
                 <div class="creator">
-                    ${ep.creator}
+                    Thann
                 </div>
-
-                <h2>
-                    Episode ${ep.episode}
-                </h2>
-
-                <p>
-                    Minecraft SMP
-                </p>
 
             </div>
 
-        `;
+        </div>
 
 
-        card.addEventListener(
-            "click",
-            () => openEpisode(ep)
-        );
+        <!-- EPISODE 2 -->
+
+        <div class="episode" data-creator="Katsaros"
+             onclick="openEpisode('YOUTUBE_LINK_2')">
+
+            <div class="thumbnail">
+
+                <img src="THUMBNAIL_2.jpg">
+
+                <span class="duration">
+                    22:14
+                </span>
+
+            </div>
+
+            <div class="episode-info">
+
+                <div class="episode-number">
+                    EPISODE 02
+                </div>
+
+                <div class="episode-title">
+                    Νέοι Συμμαθητές
+                </div>
+
+                <div class="creator">
+                    Katsaros
+                </div>
+
+            </div>
+
+        </div>
 
 
-        grid.appendChild(card);
+        <!-- EPISODE 3 -->
 
-    });
+        <div class="episode" data-creator="Zenix"
+             onclick="openEpisode('YOUTUBE_LINK_3')">
 
-}
+            <div class="thumbnail">
 
+                <img src="THUMBNAIL_3.jpg">
 
-/* =====================================
-   OPEN EPISODE
-===================================== */
+                <span class="duration">
+                    24:08
+                </span>
 
-function openEpisode(ep) {
+            </div>
 
-    modal.classList.add("show");
+            <div class="episode-info">
 
+                <div class="episode-number">
+                    EPISODE 03
+                </div>
 
-    player.src =
-        `https://www.youtube.com/embed/${ep.video}?autoplay=1`;
+                <div class="episode-title">
+                    Το Μυστικό
+                </div>
 
+                <div class="creator">
+                    Zenix
+                </div>
 
-    modalTitle.textContent =
-        `${ep.creator} — Episode ${ep.episode}`;
+            </div>
 
-
-    modalCreator.textContent =
-        "Minecraft SMP";
-
-}
-
-
-/* =====================================
-   CLOSE EPISODE
-===================================== */
-
-function closeEpisode() {
-
-    modal.classList.remove("show");
-
-    player.src = "";
-
-}
+        </div>
 
 
-close.addEventListener(
-    "click",
-    closeEpisode
-);
+        <!-- EPISODE 4 -->
+
+        <div class="episode" data-creator="Thann"
+             onclick="openEpisode('YOUTUBE_LINK_4')">
+
+            <div class="thumbnail">
+
+                <img src="THUMBNAIL_4.jpg">
+
+                <span class="duration">
+                    26:45
+                </span>
+
+            </div>
+
+            <div class="episode-info">
+
+                <div class="episode-number">
+                    EPISODE 04
+                </div>
+
+                <div class="episode-title">
+                    Το Σχέδιο
+                </div>
+
+                <div class="creator">
+                    Thann
+                </div>
+
+            </div>
+
+        </div>
 
 
-modal.addEventListener(
-    "click",
-    function(event) {
+        <!-- EPISODE 5 -->
 
-        if (event.target === modal) {
-            closeEpisode();
-        }
+        <div class="episode" data-creator="Katsaros"
+             onclick="openEpisode('YOUTUBE_LINK_5')">
 
-    }
-);
+            <div class="thumbnail">
 
+                <img src="THUMBNAIL_5.jpg">
 
-document.addEventListener(
-    "keydown",
-    function(event) {
+                <span class="duration">
+                    28:12
+                </span>
 
-        if (event.key === "Escape") {
-            closeEpisode();
-        }
+            </div>
 
-    }
-);
+            <div class="episode-info">
 
+                <div class="episode-number">
+                    EPISODE 05
+                </div>
 
-/* =====================================
-   FILTERS
-===================================== */
+                <div class="episode-title">
+                    Η Προδοσία
+                </div>
 
-document
-    .querySelectorAll(".filter")
-    .forEach(button => {
+                <div class="creator">
+                    Katsaros
+                </div>
 
-        button.addEventListener(
-            "click",
-            function() {
+            </div>
 
-                document
-                    .querySelectorAll(".filter")
-                    .forEach(btn =>
-                        btn.classList.remove("active")
-                    );
+        </div>
 
 
-                this.classList.add("active");
+        <!-- EPISODE 6 -->
+
+        <div class="episode" data-creator="Zenix"
+             onclick="openEpisode('YOUTUBE_LINK_6')">
+
+            <div class="thumbnail">
+
+                <img src="THUMBNAIL_6.jpg">
+
+                <span class="duration">
+                    29:37
+                </span>
+
+            </div>
+
+            <div class="episode-info">
+
+                <div class="episode-number">
+                    EPISODE 06
+                </div>
+
+                <div class="episode-title">
+                    Η Αποστολή
+                </div>
+
+                <div class="creator">
+                    Zenix
+                </div>
+
+            </div>
+
+        </div>
 
 
-                currentFilter =
-                    this.dataset.filter;
+        <!-- EPISODE 7 -->
+
+        <div class="episode" data-creator="Thann"
+             onclick="openEpisode('YOUTUBE_LINK_7')">
+
+            <div class="thumbnail">
+
+                <img src="THUMBNAIL_7.jpg">
+
+                <span class="duration">
+                    31:20
+                </span>
+
+            </div>
+
+            <div class="episode-info">
+
+                <div class="episode-number">
+                    EPISODE 07
+                </div>
+
+                <div class="episode-title">
+                    Η Επίθεση
+                </div>
+
+                <div class="creator">
+                    Thann
+                </div>
+
+            </div>
+
+        </div>
 
 
-                renderEpisodes();
+        <!-- EPISODE 8 -->
 
+        <div class="episode" data-creator="Zenix"
+             onclick="openEpisode('https://youtu.be/qRcthpjEB1Q')">
+
+            <div class="thumbnail">
+
+                <img src="THUMBNAIL_8.jpg">
+
+                <span class="duration">
+                    29:37
+                </span>
+
+            </div>
+
+            <div class="episode-info">
+
+                <div class="episode-number">
+                    EPISODE 08
+                </div>
+
+                <div class="episode-title">
+                    Το Τελευταίο Επεισόδιο
+                </div>
+
+                <div class="creator">
+                    Zenix
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <div class="copyright">
+            © SchoolSMP
+        </div>
+
+        <div class="created">
+            Site Created by <span>x4nth</span>
+        </div>
+
+    </footer>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+        function openEpisode(link) {
+
+            if (
+                link &&
+                !link.includes("YOUTUBE_LINK")
+            ) {
+                window.open(link, "_blank");
             }
-        );
 
-    });
-
-
-/* =====================================
-   SEARCH
-===================================== */
-
-search.addEventListener(
-    "input",
-    renderEpisodes
-);
+        }
 
 
-/* =====================================
-   INITIALIZE
-===================================== */
+        function filterEpisodes(creator) {
 
-renderEpisodes();
+            const episodes =
+                document.querySelectorAll(".episode");
 
-</script>
+            const buttons =
+                document.querySelectorAll(".filter");
+
+
+            buttons.forEach(button => {
+                button.classList.remove("active");
+            });
+
+
+            event.target.classList.add("active");
+
+
+            episodes.forEach(episode => {
+
+                if (
+                    creator === "all" ||
+                    episode.dataset.creator === creator
+                ) {
+
+                    episode.style.display = "block";
+
+                } else {
+
+                    episode.style.display = "none";
+
+                }
+
+            });
+
+        }
+
+    </script>
 
 </body>
 </html>
